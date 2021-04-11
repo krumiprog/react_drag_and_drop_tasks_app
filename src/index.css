@@ -85,7 +85,7 @@ body {
 }
 
 .category {
-  width: 30%;
+  flex-basis: 250px;
   padding: 10px;
   align-self: start;
   display: flex;
