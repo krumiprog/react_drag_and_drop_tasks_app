@@ -132,6 +132,7 @@ body {
   padding: 10px;
   background: var(--color-white);
   border-radius: 20px;
+  opacity: 0.999;
 }
 
 .card__header {

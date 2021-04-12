@@ -3,13 +3,35 @@ import { AppContext } from '../Context';
 import Category from './Category';
 
 const Main = () => {
-  const { state } = useContext(AppContext);
+  const { state, dragDropTask, dropOnCategory } = useContext(AppContext);
 
   const [time, setTime] = useState('');
+
+  const [currentCategory, setCurrentCategory] = useState(0);
+  const [currentTask, setCurrentTask] = useState(0);
 
   useEffect(() => {
     setTime(new Date().toLocaleDateString());
   }, []);
+
+  const handleDragOver = e => {
+    e.preventDefault();
+  };
+
+  const handleDragStart = (e, category, task) => {
+    setCurrentCategory(category);
+    setCurrentTask(task);
+  };
+
+  const handleDrop = (e, categoryId, taskId) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragDropTask(categoryId, taskId, currentCategory, currentTask);
+  };
+
+  const handleDropOnBoard = (e, categoryId) => {
+    dropOnCategory(categoryId, currentCategory, currentTask);
+  };
 
   return (
     <main className="main">
@@ -18,7 +40,14 @@ const Main = () => {
         <time dateTime={time}>{time}</time>
         <div className="categories">
           {state.map(category => (
-            <Category key={category.id} {...category} />
+            <Category
+              key={category.id}
+              {...category}
+              handleDragOver={handleDragOver}
+              handleDragStart={handleDragStart}
+              handleDrop={handleDrop}
+              handleDropOnBoard={handleDropOnBoard}
+            />
           ))}
         </div>
       </div>

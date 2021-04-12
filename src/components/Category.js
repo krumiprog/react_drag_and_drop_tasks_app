@@ -2,25 +2,37 @@ import { useContext, useState } from 'react';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { MdAdd } from 'react-icons/md';
 import { MdClose } from 'react-icons/md';
-// import { FaUserCircle } from 'react-icons/fa';
 import { AppContext } from '../Context';
 import Task from './Task';
 
-const Category = ({ id, title, tasks }) => {
+const Category = props => {
   const { removeCategory, addTask } = useContext(AppContext);
 
   const [isVisible, setIsVisible] = useState(false);
   const [taskTitle, setTaskTitle] = useState('');
   const [description, setDescription] = useState('');
 
+  const { id, title, tasks, handleDragOver, handleDropOnBoard } = props;
+
   const handleSubmit = e => {
     e.preventDefault();
 
+    if (!taskTitle || !description) {
+      return;
+    }
+
     addTask(id, { id: Date.now(), title: taskTitle, description });
+    setIsVisible(false);
+    setTaskTitle('');
+    setDescription('');
   };
 
   return (
-    <div className="category">
+    <div
+      className="category"
+      onDragOver={e => handleDragOver(e)}
+      onDrop={e => handleDropOnBoard(e, id)}
+    >
       <div className="category__header">
         <h3 className="category__title">{title}</h3>
         <div className="category__amount">{tasks.length}</div>
@@ -59,7 +71,7 @@ const Category = ({ id, title, tasks }) => {
       )}
       <div className="cards">
         {tasks.map(task => (
-          <Task key={task.id} categoryId={id} {...task} />
+          <Task key={task.id} categoryId={id} task={task} {...props} />
         ))}
       </div>
     </div>
