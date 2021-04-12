@@ -53,6 +53,7 @@ const Category = props => {
               type="text"
               name="title"
               placeholder="category title"
+              required
               value={taskTitle}
               onChange={e => setTaskTitle(e.target.value)}
             />
@@ -60,6 +61,7 @@ const Category = props => {
               type="text"
               name="description"
               placeholder="category description"
+              required
               value={description}
               onChange={e => setDescription(e.target.value)}
             />

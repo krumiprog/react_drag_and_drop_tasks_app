@@ -42,7 +42,7 @@ body {
 
 .new-category__input {
   height: 25px;
-  padding: 0 10px;
+  padding-left: 10px;
   display: block;
   border: none;
   outline: none;
@@ -53,6 +53,7 @@ body {
   width: 30px;
   height: 30px;
   display: flex;
+  flex-shrink: 0;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
@@ -63,6 +64,7 @@ body {
 }
 
 .new-category__btn {
+  margin-left: 5px;
   color: var(--color-prime-darken2);
   background-color: var(--color-white);
   border: 1px solid var(--color-prime-darken2);
@@ -80,12 +82,13 @@ body {
 .categories {
   margin-top: 20px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
 }
 
 .category {
-  flex-basis: 250px;
+  flex-basis: 300px;
   padding: 10px;
   align-self: start;
   display: flex;
@@ -103,6 +106,7 @@ body {
   width: 30px;
   height: 30px;
   margin: 0 auto 0 10px;
+  flex-shrink: 0;
   line-height: 30px;
   text-align: center;
   font-weight: 500;

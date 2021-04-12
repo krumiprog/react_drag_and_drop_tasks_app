@@ -1,12 +1,20 @@
 import React, { useEffect, useReducer } from 'react';
 import boardsReducer from './boardsReducer';
 
+const STORAGE_KEY = 'tasks';
+
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(boardsReducer, []);
+  const [state, dispatch] = useReducer(
+    boardsReducer,
+    [],
+    initial => JSON.parse(localStorage.getItem(STORAGE_KEY)) || initial
+  );
 
-  useEffect(() => {}, [state]);
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }, [state]);
 
   const addCategory = newCategory => {
     dispatch({ type: 'ADD_CATEGORY', payload: newCategory });
