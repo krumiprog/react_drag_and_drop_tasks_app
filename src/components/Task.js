@@ -1,7 +1,8 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { FaUserCircle } from 'react-icons/fa';
 import { AppContext } from '../Context';
+import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 
 const Task = ({
   categoryId,
@@ -11,6 +12,8 @@ const Task = ({
   handleDrop,
 }) => {
   const { removeTask } = useContext(AppContext);
+
+  const [isExpended, setIsExpended] = useState(false);
 
   return (
     <div
@@ -23,21 +26,31 @@ const Task = ({
       <div className="card__header">
         <time>{new Date(task.id).toLocaleDateString()}</time>
       </div>
-      <div className="card__text">
+      <div className="card__row">
         <h4>{task.title}</h4>
-        <p>{task.description}</p>
-      </div>
-      <div className="card__footer">
-        <div className="avatar">
-          <FaUserCircle />
-        </div>
         <button
-          className="btn delete_btn"
-          onClick={() => removeTask(categoryId, task.id)}
+          className="btn new-category__btn"
+          onClick={() => setIsExpended(!isExpended)}
         >
-          <RiDeleteBinLine />
+          {isExpended ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
         </button>
       </div>
+      {isExpended && (
+        <div className="card__text">
+          <p>{task.description}</p>
+          <div className="card__footer">
+            <div className="avatar">
+              <FaUserCircle />
+            </div>
+            <button
+              className="btn delete_btn"
+              onClick={() => removeTask(categoryId, task.id)}
+            >
+              <RiDeleteBinLine />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
